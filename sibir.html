@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cipher IT</title>
+	<link rel="stylesheet" href="sibir.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+<body>
+	<div class="blackLine"> </div>
+	<div class="header">
+		<div class="btnShit">
+			<a class="headerBtn" href="index.html">Главная</a>
+			<a class="headerBtn" href="heming.html">Элиас</a>
+			<a class="headerBtn" href="elias.html">Хеминг</a>
+			<a class="headerBtn" href="sibir.html">Сибирь</a>
+			<a class="headerBtn" href="table.html">Таблицы</a>
+		</div>
+	</div>
+	<div class="placeHolder">
+		<p class="title">Сибирский шифр</p>
+		<div class="btnPanel">
+			Опция:
+			<select id="1">
+				<option>Зашифровать</option>
+				<option>Расшифровать</option>
+			</select>
+			<div class="act">Выполнить</div>
+		</div>
+		<div class="textHolder">
+			<textarea class="textField" id="input" autofocus="autofocus"></textarea>
+			<textarea class="textField" id="output"></textarea>
+		</div>
+		<div class="description">
+			<p class="tit1">Описание:</p>
+			
+		</div>
+	</div>
+	
+<script>
+	$('.act').click(function(){
+	$('#output').val('');
+	if ($( "#1 option:selected" ).text() == 'Зашифровать')
+		$('#output').val(fromSib ($('#input').val())       );
+	if ($( "#1 option:selected" ).text() == 'Расшифровать')
+		$('#output').val(toSib( ($('#input').val()) ));
+});
+	
+	function fromSib(text){
+		text = text.replace(/ /g, '_');
+		var t = funfun(text);
+		var arr = fill(t);	
+		for (var i = 0; i < arr.length; i++)
+			for (var j = 0; j < arr.length; j++){
+				if (arr[i][j] <= text.length){
+					var index = arr[i][j];
+					arr[i][j] = text[--index];
+				}
+				else 
+					arr[i][j]='';
+			}
+		var ansLine = ''
+		for (var i = 0; i < arr.length; i++){
+			for (var j = 0; j < arr.length; j++)
+				ansLine += arr[i][j];
+			ansLine += ' ';
+		}
+		console.log(arr);
+		return ansLine;
+	}
+
+	function toSib(text) {
+		var temptext = text.split(' ');
+		var flen = temptext[0].length;
+		var arr = matrixArray(flen+2,flen+2);
+		var line = [];
+		for(var  i = 0, j = 0, ii = 0; i < text.length; i++){
+			if (text[i] != ' '){    // так бы я сделал этот цикл в люом другом языке, но тут видимо не судьба
+				arr[j][ii] = text[i];
+				ii++;
+			} else {
+				j++;
+				ii=0;
+			}
+		}
+		var ansLine = '';
+		for(var j = 0; j < arr.length; j++){
+			if (j % 2 != 0)
+			  for(var x = j, y = 0; y <= j; x--, y++ )
+				ansLine += arr[y][x];
+			else
+			  for(var x = 0, y = j; x <= j; x++, y--)
+				ansLine += arr[y][x];
+		  }
+		return ansLine;
+	}
+	
+	function funfun(text){
+	  var lentext = text.length;
+	  var kolvo = 0;
+	  var n = 1
+	  while(lentext > kolvo){
+		kolvo = (n+n*n)/2;
+		n++;
+	  }
+	  return n-1;
+	}
+	
+	function matrixArray(rows,columns){
+	  var arr = new Array();
+	  for(var i=0; i<rows; i++){
+		arr[i] = new Array();
+		for(var j=0; j<columns; j++){
+		  arr[i][j] = '';
+		}
+	  }
+	  return arr;
+	}
+	
+	function fill(num){
+		var colum = num; // количество столбцов массива
+		var row   = num; // количество строк массива
+		var array = matrixArray(num,num);
+		var x, y,  // Координаты текущего элемента массива
+			value = 1; // значение, которым заполняется массив
+		for (var diag = 0; diag < colum; diag++) // выполняем проход по диагоналям
+		{
+			if (diag % 2 == 1) // по четным диагоналям
+			{
+				x = 0; // х-координата первого лемента массива на диагонали - diag
+				y = diag; // у-координата элемента массива на диагонали - diag
+
+				while (y >= 0) // пока y-координата находится в верхней части диагонали
+				{
+					array[x][y] = value; // записать значение в массив
+					value++;
+					x++;     // по горизонтали, смещаемся влево
+					y--;    // по вертикали, смещаемся вниз
+				}
+			}
+			else // по нечетным диагоналям
+			{
+				x = diag; // х-координата элемента массива на диагонали - diag
+				y = 0; // у-координата первого элемента массива на диагонали - diag
+
+				while (x >= 0) // пока x-координата находится в левой части диагонали
+				{
+					array[x][y] = value; // записать значение в массив
+					value++;
+					x -= 1;  // по горизонтали, смещаемся вправо
+					y +=  1; // по вертикали, смещаемся вверх
+				}
+			}
+		} // конец for
+
+		// заполнение второй половины массива по диагонали, зигзагом, начиная
+		// слева и сверху, заканчивая  последним элементом массива
+		for (var diag = 1; diag < colum; diag++)
+		{
+			if (diag % 2 == 0) // по четным диагоналям
+			{
+				x = num-1; // х-координата первого элемента массива на диагонали - diag
+				y = diag;  // у-координата элемента массива на диагонали - diag
+
+				while (y <= num-1) // Пока не кончилась диагональ
+				{
+					array[x][y] = value;
+					value++;
+					x--; // по горизонтали, смещаемся влево
+					y++; // по вертикали, смещаемся вниз
+				}
+			}
+			else // по не четным диагоналям
+			{
+				x = diag; // х-координата первого элемента к-ой диагонали
+				y = num-1;  // у-координата первого элемента к-ой диагонали
+
+				while (x <= num-1) // Пока не кончилась диагональ
+				{
+					array[x][y] = value;
+					value++;
+					x++; // по горизонтали, смещаемся вправо
+					y--; // по вертикали, смещаемся вверх
+				}
+			} // конец if-else
+		} // конец цикла for (заполнение второй половины массива)
+		return array;
+	}
+
+
+</script>
+	
+</body>
+</html>

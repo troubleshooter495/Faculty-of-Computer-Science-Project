@@ -1,0 +1,45 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+
+}
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
+.blackLine {
+	width:100%;
+	height: 20px;
+	background: black;
+}
+.header {
+	width: 100%;
+	height: 65px;
+	background: white;
+	border-bottom: 1px solid black;
+}
+
+.btnShit {
+	margin:auto;
+	width: 1200px;
+}
+
+.headerBtn {
+	text-align: center;
+	display: inline-block;
+	width: 150px;
+	height: 20px;
+	padding: 10px;
+	cursor: pointer;
+	border: 1px solid black;
+	background: white;
+	margin: 10px 30px;
+	font-family: Gill Sans, sans-serif;
+	letter-spacing: 1px;
+}
+
+.headerBtn:hover{
+	background: #eceaed;
+}

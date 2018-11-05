@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cipher IT</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+<body>
+	<div class="blackLine"> </div>
+	<div class="header">
+		<div class="btnShit">
+			<a class="headerBtn" href="index.html">Главная</a>
+			<a class="headerBtn" href="heming.html">Элиас</a>
+			<a class="headerBtn" href="elias.html">Хеминг</a>
+			<a class="headerBtn" href="sibir.html">Сибирь</a>
+			<a class="headerBtn" href="table.html">Таблицы</a>
+		</div>
+	</div>
+	<p class="name"> Cipher iT </p>
+	<p class="description">На данном сайте собраны основные алгоритмы шифрования, изучаемые в "ЧУ ДО Школа Программистов", такие как шифр Хеминга, Элиаса, Сибирский шифр и табличные перестановки. Сайт создан для уменьшения затрат времени на дешифрование вручную. Алгоритмы шифрования работают в обе стороны - как дешифроание, так и шифрование. Приятного использования!</p>
+	<p class="title">Режимы</p>
+	<div class="types">
+		<div class="block" id="b1">Элиас</div>
+		<div class="block" id="b2">Хеминг</div>
+		<div class="block" id="b3">Сибирь</div>
+		<div class="block" id="b4">Таблицы</div>
+	</div>
+
+
+<script>
+$('#b1').click(function(){
+	window.location.href = "heming.html";
+});	
+$('#b2').click(function(){
+	window.location.href = "elias.html";
+});	
+$('#b3').click(function(){
+	window.location.href = "table.html";
+});	
+$('#b4').click(function(){
+	window.location.href = "sibir.html";
+});	
+
+</script>
+</body>
+</html>
